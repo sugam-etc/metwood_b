@@ -1,3 +1,4 @@
+// routes/itemRoutes.js
 import express from "express";
 import multer from "multer";
 import { CloudinaryStorage } from "multer-storage-cloudinary";
@@ -14,14 +15,15 @@ const router = express.Router();
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "uploads",
+    folder: "metwood_images", // Store images in the "metwood_images" folder in Cloudinary
     allowed_formats: ["jpg", "jpeg", "png"],
   },
 });
 
 const upload = multer({ storage });
 
-router.post("/items", upload.array("images", 5), createItem);
+// Routes
+router.post("/items", createItem);
 router.get("/items", getAllItems);
 router.delete("/items/:id", deleteItem);
 
