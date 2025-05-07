@@ -1,16 +1,11 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const itemSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    description: String,
-    price: { type: Number, required: true },
-    category: String,
-    images: [String],
-  },
-  { timestamps: true }
-);
+const itemSchema = new mongoose.Schema({
+  name: String,
+  description: String,
+  price: Number,
+  category: String,
+  images: [String], // Array of image URLs
+});
 
-const Item = mongoose.model("Item", itemSchema);
-
-export default Item;
+module.exports = mongoose.model("Item", itemSchema);

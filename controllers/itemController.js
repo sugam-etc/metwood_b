@@ -1,20 +1,33 @@
 import Item from "../models/itemModel.js";
 
-// Create Item
+// Create Item (Updated)
 export const createItem = async (req, res) => {
   try {
-    console.log("Uploaded files:", req.files); // 👈 Add this line
-    const { name, description, price, category } = req.body;
-    const images = req.files.map((file) => file.filename);
+    const { name, description, price, category, images } = req.body;
+
+    // Basic validation
+    if (
+      !name ||
+      !description ||
+      !price ||
+      !category ||
+      !images ||
+      images.length === 0
+    ) {
+      return res
+        .status(400)
+        .json({ message: "All fields including images are required" });
+    }
+
     const newItem = new Item({ name, description, price, category, images });
     await newItem.save();
+
     res.status(201).json(newItem);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Failed to create item" });
   }
 };
-
 // Get All Items
 export const getAllItems = async (req, res) => {
   try {
